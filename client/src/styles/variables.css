@@ -1,0 +1,983 @@
+/**
+ * ============================================
+ * COSMIC DESIGN SYSTEM
+ * Direction — A dreamy, cosmic productivity app
+ * ============================================
+ * 
+ * Design Philosophy:
+ * - Monochrome only (black, white, grays)
+ * - Dreamy & flowy (soft gradients, blur effects)
+ * - Minimal interactions (one primary action per view)
+ * - Spatial metaphor (tasks as stars, progress as travel)
+ */
+
+/* ============================================
+   1. COLOR PALETTE — Monochrome Cosmos
+   ============================================ */
+
+:root {
+  /* === Core Colors === */
+  --void: #000000;              /* Deep space - darkest background */
+  --cosmos: #0a0a0a;            /* Primary background */
+  --nebula: #111111;            /* Card backgrounds */
+  --eclipse: #1a1a1a;           /* Elevated surfaces */
+  --asteroid: #222222;          /* Borders, dividers */
+  --comet: #2a2a2a;             /* Subtle borders */
+  --dust: #333333;              /* Disabled states */
+  
+  /* === Text Colors === */
+  --moonlight: #666666;         /* Muted text, placeholders */
+  --starlight: #999999;         /* Secondary text */
+  --glow: #cccccc;              /* Primary text */
+  --supernova: #ffffff;         /* Headings, emphasis */
+  
+  /* === Accent Colors (subtle) === */
+  --pulse: #ffffff;             /* Primary accent (white) */
+  --pulse-dim: rgba(255, 255, 255, 0.1);
+  --pulse-soft: rgba(255, 255, 255, 0.05);
+  --pulse-glow: rgba(255, 255, 255, 0.15);
+  
+  /* === State Colors === */
+  --success: #4ade80;           /* Green for success */
+  --success-dim: rgba(74, 222, 128, 0.1);
+  --warning: #fbbf24;           /* Amber for warnings */
+  --warning-dim: rgba(251, 191, 36, 0.1);
+  --danger: #f87171;            /* Red for errors */
+  --danger-dim: rgba(248, 113, 113, 0.1);
+  --info: #60a5fa;              /* Blue for info */
+  --info-dim: rgba(96, 165, 250, 0.1);
+  
+  /* === Gradients === */
+  --gradient-void: linear-gradient(180deg, var(--void) 0%, var(--cosmos) 100%);
+  --gradient-nebula: linear-gradient(135deg, var(--nebula) 0%, var(--eclipse) 100%);
+  --gradient-glow: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+  --gradient-radial: radial-gradient(ellipse at center, var(--eclipse) 0%, var(--void) 70%);
+  --gradient-spotlight: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 50%);
+  
+  /* === Shadows === */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 20px rgba(255, 255, 255, 0.1);
+  --shadow-glow-lg: 0 0 40px rgba(255, 255, 255, 0.15);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  
+  /* ============================================
+     2. TYPOGRAPHY SCALE
+     ============================================ */
+  
+  /* Font Family */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk', var(--font-sans);
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  
+  /* Font Sizes — Modular Scale (1.25 ratio) */
+  --text-xs: 0.75rem;           /* 12px */
+  --text-sm: 0.875rem;          /* 14px */
+  --text-base: 1rem;            /* 16px */
+  --text-lg: 1.125rem;          /* 18px */
+  --text-xl: 1.25rem;           /* 20px */
+  --text-2xl: 1.5rem;           /* 24px */
+  --text-3xl: 1.875rem;         /* 30px */
+  --text-4xl: 2.25rem;          /* 36px */
+  --text-5xl: 3rem;             /* 48px */
+  --text-6xl: 3.75rem;          /* 60px */
+  --text-7xl: 4.5rem;           /* 72px */
+  
+  /* Font Weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+  
+  /* Letter Spacing */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+  
+  /* ============================================
+     3. SPACING SCALE
+     ============================================ */
+  
+  --space-0: 0;
+  --space-px: 1px;
+  --space-0-5: 0.125rem;        /* 2px */
+  --space-1: 0.25rem;           /* 4px */
+  --space-1-5: 0.375rem;        /* 6px */
+  --space-2: 0.5rem;            /* 8px */
+  --space-2-5: 0.625rem;        /* 10px */
+  --space-3: 0.75rem;           /* 12px */
+  --space-3-5: 0.875rem;        /* 14px */
+  --space-4: 1rem;              /* 16px */
+  --space-5: 1.25rem;           /* 20px */
+  --space-6: 1.5rem;            /* 24px */
+  --space-7: 1.75rem;           /* 28px */
+  --space-8: 2rem;              /* 32px */
+  --space-9: 2.25rem;           /* 36px */
+  --space-10: 2.5rem;           /* 40px */
+  --space-11: 2.75rem;          /* 44px */
+  --space-12: 3rem;             /* 48px */
+  --space-14: 3.5rem;           /* 56px */
+  --space-16: 4rem;             /* 64px */
+  --space-20: 5rem;             /* 80px */
+  --space-24: 6rem;             /* 96px */
+  --space-28: 7rem;             /* 112px */
+  --space-32: 8rem;             /* 128px */
+  --space-36: 9rem;             /* 144px */
+  --space-40: 10rem;            /* 160px */
+  --space-44: 11rem;            /* 176px */
+  --space-48: 12rem;            /* 192px */
+  --space-52: 13rem;            /* 208px */
+  --space-56: 14rem;            /* 224px */
+  --space-60: 15rem;            /* 240px */
+  --space-64: 16rem;            /* 256px */
+  --space-72: 18rem;            /* 288px */
+  --space-80: 20rem;            /* 320px */
+  --space-96: 24rem;            /* 384px */
+  
+  /* ============================================
+     4. BORDER RADIUS
+     ============================================ */
+  
+  --radius-none: 0;
+  --radius-sm: 0.25rem;         /* 4px */
+  --radius-md: 0.375rem;        /* 6px */
+  --radius-lg: 0.5rem;          /* 8px */
+  --radius-xl: 0.75rem;         /* 12px */
+  --radius-2xl: 1rem;           /* 16px */
+  --radius-3xl: 1.5rem;         /* 24px */
+  --radius-4xl: 2rem;           /* 32px */
+  --radius-full: 9999px;
+  
+  /* ============================================
+     5. TRANSITIONS & ANIMATIONS
+     ============================================ */
+  
+  /* Durations */
+  --duration-75: 75ms;
+  --duration-100: 100ms;
+  --duration-150: 150ms;
+  --duration-200: 200ms;
+  --duration-300: 300ms;
+  --duration-500: 500ms;
+  --duration-700: 700ms;
+  --duration-1000: 1000ms;
+  
+  /* Easing */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-elastic: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  
+  /* Common Transitions */
+  --transition-colors: color var(--duration-200) var(--ease-in-out),
+                       background-color var(--duration-200) var(--ease-in-out),
+                       border-color var(--duration-200) var(--ease-in-out);
+  --transition-opacity: opacity var(--duration-200) var(--ease-in-out);
+  --transition-transform: transform var(--duration-200) var(--ease-out);
+  --transition-all: all var(--duration-300) var(--ease-in-out);
+  --transition-shadow: box-shadow var(--duration-200) var(--ease-in-out);
+  
+  /* ============================================
+     6. Z-INDEX SCALE
+     ============================================ */
+  
+  --z-below: -1;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-popover: 500;
+  --z-toast: 600;
+  --z-tooltip: 700;
+  --z-max: 9999;
+  
+  /* ============================================
+     7. BLUR VALUES
+     ============================================ */
+  
+  --blur-none: 0;
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 12px;
+  --blur-xl: 16px;
+  --blur-2xl: 24px;
+  --blur-3xl: 40px;
+}
+
+/* ============================================
+   8. BASE RESET & DEFAULTS
+   ============================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-normal);
+  color: var(--glow);
+  background: var(--void);
+  min-height: 100vh;
+}
+
+/* ============================================
+   9. TYPOGRAPHY UTILITIES
+   ============================================ */
+
+/* Headings */
+.text-display {
+  font-family: var(--font-display);
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+.text-h1 {
+  font-size: var(--text-5xl);
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  color: var(--supernova);
+}
+
+.text-h2 {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  color: var(--supernova);
+}
+
+.text-h3 {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-snug);
+  color: var(--supernova);
+}
+
+.text-h4 {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-snug);
+  color: var(--supernova);
+}
+
+.text-h5 {
+  font-size: var(--text-xl);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-normal);
+  color: var(--glow);
+}
+
+.text-h6 {
+  font-size: var(--text-lg);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-normal);
+  color: var(--glow);
+}
+
+/* Body Text */
+.text-body { font-size: var(--text-base); color: var(--glow); }
+.text-body-sm { font-size: var(--text-sm); color: var(--starlight); }
+.text-body-xs { font-size: var(--text-xs); color: var(--moonlight); }
+.text-body-lg { font-size: var(--text-lg); color: var(--glow); }
+
+/* Text Colors */
+.text-supernova { color: var(--supernova); }
+.text-glow { color: var(--glow); }
+.text-starlight { color: var(--starlight); }
+.text-moonlight { color: var(--moonlight); }
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.text-danger { color: var(--danger); }
+.text-info { color: var(--info); }
+
+/* Text Alignment */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* Text Transform */
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+
+/* Font Weights */
+.font-light { font-weight: var(--font-light); }
+.font-normal { font-weight: var(--font-normal); }
+.font-medium { font-weight: var(--font-medium); }
+.font-semibold { font-weight: var(--font-semibold); }
+.font-bold { font-weight: var(--font-bold); }
+
+/* ============================================
+   10. SPACING UTILITIES
+   ============================================ */
+
+/* Margin */
+.m-0 { margin: var(--space-0); }
+.m-1 { margin: var(--space-1); }
+.m-2 { margin: var(--space-2); }
+.m-3 { margin: var(--space-3); }
+.m-4 { margin: var(--space-4); }
+.m-5 { margin: var(--space-5); }
+.m-6 { margin: var(--space-6); }
+.m-8 { margin: var(--space-8); }
+.m-10 { margin: var(--space-10); }
+.m-12 { margin: var(--space-12); }
+.m-auto { margin: auto; }
+
+.mt-0 { margin-top: var(--space-0); }
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-5 { margin-top: var(--space-5); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-8 { margin-top: var(--space-8); }
+.mt-10 { margin-top: var(--space-10); }
+.mt-12 { margin-top: var(--space-12); }
+
+.mb-0 { margin-bottom: var(--space-0); }
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-5 { margin-bottom: var(--space-5); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-8 { margin-bottom: var(--space-8); }
+.mb-10 { margin-bottom: var(--space-10); }
+.mb-12 { margin-bottom: var(--space-12); }
+
+.ml-0 { margin-left: var(--space-0); }
+.ml-1 { margin-left: var(--space-1); }
+.ml-2 { margin-left: var(--space-2); }
+.ml-3 { margin-left: var(--space-3); }
+.ml-4 { margin-left: var(--space-4); }
+.ml-auto { margin-left: auto; }
+
+.mr-0 { margin-right: var(--space-0); }
+.mr-1 { margin-right: var(--space-1); }
+.mr-2 { margin-right: var(--space-2); }
+.mr-3 { margin-right: var(--space-3); }
+.mr-4 { margin-right: var(--space-4); }
+.mr-auto { margin-right: auto; }
+
+.mx-auto { margin-left: auto; margin-right: auto; }
+.my-0 { margin-top: var(--space-0); margin-bottom: var(--space-0); }
+.my-4 { margin-top: var(--space-4); margin-bottom: var(--space-4); }
+.my-6 { margin-top: var(--space-6); margin-bottom: var(--space-6); }
+.my-8 { margin-top: var(--space-8); margin-bottom: var(--space-8); }
+
+/* Padding */
+.p-0 { padding: var(--space-0); }
+.p-1 { padding: var(--space-1); }
+.p-2 { padding: var(--space-2); }
+.p-3 { padding: var(--space-3); }
+.p-4 { padding: var(--space-4); }
+.p-5 { padding: var(--space-5); }
+.p-6 { padding: var(--space-6); }
+.p-8 { padding: var(--space-8); }
+.p-10 { padding: var(--space-10); }
+.p-12 { padding: var(--space-12); }
+
+.pt-0 { padding-top: var(--space-0); }
+.pt-1 { padding-top: var(--space-1); }
+.pt-2 { padding-top: var(--space-2); }
+.pt-3 { padding-top: var(--space-3); }
+.pt-4 { padding-top: var(--space-4); }
+.pt-6 { padding-top: var(--space-6); }
+.pt-8 { padding-top: var(--space-8); }
+
+.pb-0 { padding-bottom: var(--space-0); }
+.pb-1 { padding-bottom: var(--space-1); }
+.pb-2 { padding-bottom: var(--space-2); }
+.pb-3 { padding-bottom: var(--space-3); }
+.pb-4 { padding-bottom: var(--space-4); }
+.pb-6 { padding-bottom: var(--space-6); }
+.pb-8 { padding-bottom: var(--space-8); }
+
+.pl-0 { padding-left: var(--space-0); }
+.pl-1 { padding-left: var(--space-1); }
+.pl-2 { padding-left: var(--space-2); }
+.pl-3 { padding-left: var(--space-3); }
+.pl-4 { padding-left: var(--space-4); }
+.pl-6 { padding-left: var(--space-6); }
+
+.pr-0 { padding-right: var(--space-0); }
+.pr-1 { padding-right: var(--space-1); }
+.pr-2 { padding-right: var(--space-2); }
+.pr-3 { padding-right: var(--space-3); }
+.pr-4 { padding-right: var(--space-4); }
+.pr-6 { padding-right: var(--space-6); }
+
+.px-0 { padding-left: var(--space-0); padding-right: var(--space-0); }
+.px-2 { padding-left: var(--space-2); padding-right: var(--space-2); }
+.px-3 { padding-left: var(--space-3); padding-right: var(--space-3); }
+.px-4 { padding-left: var(--space-4); padding-right: var(--space-4); }
+.px-5 { padding-left: var(--space-5); padding-right: var(--space-5); }
+.px-6 { padding-left: var(--space-6); padding-right: var(--space-6); }
+.px-8 { padding-left: var(--space-8); padding-right: var(--space-8); }
+
+.py-0 { padding-top: var(--space-0); padding-bottom: var(--space-0); }
+.py-2 { padding-top: var(--space-2); padding-bottom: var(--space-2); }
+.py-3 { padding-top: var(--space-3); padding-bottom: var(--space-3); }
+.py-4 { padding-top: var(--space-4); padding-bottom: var(--space-4); }
+.py-5 { padding-top: var(--space-5); padding-bottom: var(--space-5); }
+.py-6 { padding-top: var(--space-6); padding-bottom: var(--space-6); }
+.py-8 { padding-top: var(--space-8); padding-bottom: var(--space-8); }
+
+/* Gap (for flex/grid) */
+.gap-0 { gap: var(--space-0); }
+.gap-1 { gap: var(--space-1); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-5 { gap: var(--space-5); }
+.gap-6 { gap: var(--space-6); }
+.gap-8 { gap: var(--space-8); }
+.gap-10 { gap: var(--space-10); }
+.gap-12 { gap: var(--space-12); }
+
+/* ============================================
+   11. LAYOUT UTILITIES
+   ============================================ */
+
+/* Display */
+.hidden { display: none; }
+.block { display: block; }
+.inline { display: inline; }
+.inline-block { display: inline-block; }
+.flex { display: flex; }
+.inline-flex { display: inline-flex; }
+.grid { display: grid; }
+
+/* Flexbox */
+.flex-row { flex-direction: row; }
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-nowrap { flex-wrap: nowrap; }
+.flex-1 { flex: 1 1 0%; }
+.flex-auto { flex: 1 1 auto; }
+.flex-none { flex: none; }
+.flex-grow { flex-grow: 1; }
+.flex-shrink-0 { flex-shrink: 0; }
+
+/* Alignment */
+.items-start { align-items: flex-start; }
+.items-center { align-items: center; }
+.items-end { align-items: flex-end; }
+.items-stretch { align-items: stretch; }
+.items-baseline { align-items: baseline; }
+
+.justify-start { justify-content: flex-start; }
+.justify-center { justify-content: center; }
+.justify-end { justify-content: flex-end; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+.justify-evenly { justify-content: space-evenly; }
+
+.self-start { align-self: flex-start; }
+.self-center { align-self: center; }
+.self-end { align-self: flex-end; }
+.self-stretch { align-self: stretch; }
+
+/* Position */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.sticky { position: sticky; }
+.static { position: static; }
+
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.top-0 { top: 0; }
+.right-0 { right: 0; }
+.bottom-0 { bottom: 0; }
+.left-0 { left: 0; }
+
+/* Width & Height */
+.w-full { width: 100%; }
+.w-screen { width: 100vw; }
+.w-auto { width: auto; }
+.w-fit { width: fit-content; }
+.min-w-0 { min-width: 0; }
+.max-w-full { max-width: 100%; }
+.max-w-screen { max-width: 100vw; }
+.max-w-sm { max-width: 24rem; }
+.max-w-md { max-width: 28rem; }
+.max-w-lg { max-width: 32rem; }
+.max-w-xl { max-width: 36rem; }
+.max-w-2xl { max-width: 42rem; }
+.max-w-3xl { max-width: 48rem; }
+.max-w-4xl { max-width: 56rem; }
+.max-w-5xl { max-width: 64rem; }
+
+.h-full { height: 100%; }
+.h-screen { height: 100vh; }
+.h-auto { height: auto; }
+.h-fit { height: fit-content; }
+.min-h-0 { min-height: 0; }
+.min-h-full { min-height: 100%; }
+.min-h-screen { min-height: 100vh; }
+
+/* Overflow */
+.overflow-auto { overflow: auto; }
+.overflow-hidden { overflow: hidden; }
+.overflow-visible { overflow: visible; }
+.overflow-scroll { overflow: scroll; }
+.overflow-x-auto { overflow-x: auto; }
+.overflow-y-auto { overflow-y: auto; }
+
+/* ============================================
+   12. VISUAL EFFECTS — Cosmic Glow & Blur
+   ============================================ */
+
+/* Glow Effects */
+.glow {
+  box-shadow: var(--shadow-glow);
+}
+
+.glow-lg {
+  box-shadow: var(--shadow-glow-lg);
+}
+
+.glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
+  50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.2); }
+}
+
+.glow-text {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.glow-text-lg {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.3);
+}
+
+/* Hover Glow */
+.hover-glow {
+  transition: box-shadow var(--duration-300) var(--ease-out);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--shadow-glow);
+}
+
+.hover-glow-lg:hover {
+  box-shadow: var(--shadow-glow-lg);
+}
+
+/* Blur Effects */
+.blur-sm { filter: blur(var(--blur-sm)); }
+.blur-md { filter: blur(var(--blur-md)); }
+.blur-lg { filter: blur(var(--blur-lg)); }
+.blur-xl { filter: blur(var(--blur-xl)); }
+.blur-2xl { filter: blur(var(--blur-2xl)); }
+.blur-3xl { filter: blur(var(--blur-3xl)); }
+
+/* Backdrop Blur */
+.backdrop-blur-sm { backdrop-filter: blur(var(--blur-sm)); }
+.backdrop-blur-md { backdrop-filter: blur(var(--blur-md)); }
+.backdrop-blur-lg { backdrop-filter: blur(var(--blur-lg)); }
+.backdrop-blur-xl { backdrop-filter: blur(var(--blur-xl)); }
+.backdrop-blur-2xl { backdrop-filter: blur(var(--blur-2xl)); }
+
+/* Glass Effect (Glassmorphism) */
+.glass {
+  background: rgba(17, 17, 17, 0.7);
+  backdrop-filter: blur(var(--blur-lg));
+  border: 1px solid var(--asteroid);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(var(--blur-lg));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(var(--blur-xl));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Gradient Overlays */
+.gradient-overlay {
+  position: relative;
+}
+
+.gradient-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-glow);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Spotlight Effect */
+.spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: var(--gradient-spotlight);
+  pointer-events: none;
+}
+
+/* ============================================
+   13. BORDER UTILITIES
+   ============================================ */
+
+.border-0 { border-width: 0; }
+.border { border-width: 1px; border-style: solid; }
+.border-2 { border-width: 2px; border-style: solid; }
+.border-t { border-top-width: 1px; border-style: solid; }
+.border-b { border-bottom-width: 1px; border-style: solid; }
+.border-l { border-left-width: 1px; border-style: solid; }
+.border-r { border-right-width: 1px; border-style: solid; }
+
+.border-void { border-color: var(--void); }
+.border-cosmos { border-color: var(--cosmos); }
+.border-nebula { border-color: var(--nebula); }
+.border-eclipse { border-color: var(--eclipse); }
+.border-asteroid { border-color: var(--asteroid); }
+.border-comet { border-color: var(--comet); }
+.border-transparent { border-color: transparent; }
+.border-pulse { border-color: var(--pulse-dim); }
+
+.rounded-none { border-radius: var(--radius-none); }
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded { border-radius: var(--radius-md); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-2xl { border-radius: var(--radius-2xl); }
+.rounded-3xl { border-radius: var(--radius-3xl); }
+.rounded-4xl { border-radius: var(--radius-4xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* ============================================
+   14. BACKGROUND UTILITIES
+   ============================================ */
+
+.bg-void { background-color: var(--void); }
+.bg-cosmos { background-color: var(--cosmos); }
+.bg-nebula { background-color: var(--nebula); }
+.bg-eclipse { background-color: var(--eclipse); }
+.bg-asteroid { background-color: var(--asteroid); }
+.bg-comet { background-color: var(--comet); }
+.bg-dust { background-color: var(--dust); }
+.bg-transparent { background-color: transparent; }
+.bg-pulse-dim { background-color: var(--pulse-dim); }
+.bg-pulse-soft { background-color: var(--pulse-soft); }
+
+.bg-gradient-void { background: var(--gradient-void); }
+.bg-gradient-nebula { background: var(--gradient-nebula); }
+.bg-gradient-radial { background: var(--gradient-radial); }
+
+/* ============================================
+   15. OPACITY UTILITIES
+   ============================================ */
+
+.opacity-0 { opacity: 0; }
+.opacity-5 { opacity: 0.05; }
+.opacity-10 { opacity: 0.1; }
+.opacity-20 { opacity: 0.2; }
+.opacity-25 { opacity: 0.25; }
+.opacity-30 { opacity: 0.3; }
+.opacity-40 { opacity: 0.4; }
+.opacity-50 { opacity: 0.5; }
+.opacity-60 { opacity: 0.6; }
+.opacity-70 { opacity: 0.7; }
+.opacity-75 { opacity: 0.75; }
+.opacity-80 { opacity: 0.8; }
+.opacity-90 { opacity: 0.9; }
+.opacity-100 { opacity: 1; }
+
+/* ============================================
+   16. CURSOR UTILITIES
+   ============================================ */
+
+.cursor-auto { cursor: auto; }
+.cursor-default { cursor: default; }
+.cursor-pointer { cursor: pointer; }
+.cursor-wait { cursor: wait; }
+.cursor-text { cursor: text; }
+.cursor-move { cursor: move; }
+.cursor-not-allowed { cursor: not-allowed; }
+.cursor-grab { cursor: grab; }
+.cursor-grabbing { cursor: grabbing; }
+
+/* ============================================
+   17. POINTER EVENTS
+   ============================================ */
+
+.pointer-events-none { pointer-events: none; }
+.pointer-events-auto { pointer-events: auto; }
+
+/* ============================================
+   18. USER SELECT
+   ============================================ */
+
+.select-none { user-select: none; }
+.select-text { user-select: text; }
+.select-all { user-select: all; }
+.select-auto { user-select: auto; }
+
+/* ============================================
+   19. TRANSITION UTILITIES
+   ============================================ */
+
+.transition-none { transition: none; }
+.transition { transition: var(--transition-all); }
+.transition-colors { transition: var(--transition-colors); }
+.transition-opacity { transition: var(--transition-opacity); }
+.transition-transform { transition: var(--transition-transform); }
+.transition-shadow { transition: var(--transition-shadow); }
+
+/* ============================================
+   20. ANIMATION UTILITIES
+   ============================================ */
+
+/* Fade In */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in var(--duration-300) var(--ease-out);
+}
+
+/* Fade Out */
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.animate-fade-out {
+  animation: fade-out var(--duration-300) var(--ease-in);
+}
+
+/* Slide Up */
+@keyframes slide-up {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up var(--duration-300) var(--ease-out);
+}
+
+/* Slide Down */
+@keyframes slide-down {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-down {
+  animation: slide-down var(--duration-300) var(--ease-out);
+}
+
+/* Scale In */
+@keyframes scale-in {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-scale-in {
+  animation: scale-in var(--duration-200) var(--ease-out);
+}
+
+/* Pulse */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse {
+  animation: pulse 2s var(--ease-in-out) infinite;
+}
+
+/* Spin */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Bounce */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-bounce {
+  animation: bounce 1s var(--ease-in-out) infinite;
+}
+
+/* Float (dreamy effect) */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-float {
+  animation: float 3s var(--ease-in-out) infinite;
+}
+
+/* Twinkle (star effect) */
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.95); }
+}
+
+.animate-twinkle {
+  animation: twinkle 2s var(--ease-in-out) infinite;
+}
+
+/* Shimmer (loading effect) */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--nebula) 0%,
+    var(--eclipse) 50%,
+    var(--nebula) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s var(--ease-in-out) infinite;
+}
+
+/* ============================================
+   21. SCREEN READER UTILITIES
+   ============================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.not-sr-only {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ============================================
+   22. FOCUS STATES
+   ============================================ */
+
+.focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--void), 0 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+.focus-ring:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--void), 0 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   23. SCROLLBAR STYLING
+   ============================================ */
+
+/* Custom Scrollbar */
+.scrollbar-cosmic {
+  scrollbar-width: thin;
+  scrollbar-color: var(--asteroid) var(--void);
+}
+
+.scrollbar-cosmic::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-cosmic::-webkit-scrollbar-track {
+  background: var(--void);
+  border-radius: var(--radius-full);
+}
+
+.scrollbar-cosmic::-webkit-scrollbar-thumb {
+  background: var(--asteroid);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--void);
+}
+
+.scrollbar-cosmic::-webkit-scrollbar-thumb:hover {
+  background: var(--comet);
+}
+
+/* Hide Scrollbar */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

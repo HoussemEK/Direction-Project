@@ -1,0 +1,461 @@
+@import "./variables.css";
+@import "./components.css";
+
+/* App Shell */
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--void);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 280px;
+  min-height: 100vh;
+  background: var(--cosmos);
+  border-right: 1px solid var(--asteroid);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.sidebar .logo {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--supernova);
+  margin-bottom: var(--space-8);
+  letter-spacing: var(--tracking-tight);
+}
+
+.sidebar .nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  color: var(--starlight);
+  text-decoration: none;
+  border-radius: var(--radius-lg);
+  transition: var(--transition-all);
+  font-weight: var(--font-medium);
+}
+
+.sidebar .nav-link:hover {
+  background: var(--pulse-soft);
+  color: var(--supernova);
+}
+
+.sidebar .nav-link.active {
+  background: var(--pulse-dim);
+  color: var(--supernova);
+}
+
+.sidebar .sidebar-footer {
+  margin-top: auto;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--asteroid);
+}
+
+.sidebar .user-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.sidebar .user-name {
+  font-weight: var(--font-semibold);
+  color: var(--glow);
+  font-size: var(--text-sm);
+}
+
+.sidebar .user-email {
+  font-size: var(--text-xs);
+  color: var(--moonlight);
+}
+
+.sidebar .logout-button {
+  width: 100%;
+  padding: var(--space-3);
+  background: transparent;
+  border: 1px solid var(--asteroid);
+  border-radius: var(--radius-lg);
+  color: var(--starlight);
+  cursor: pointer;
+  transition: var(--transition-all);
+  font-weight: var(--font-medium);
+}
+
+.sidebar .logout-button:hover {
+  background: var(--pulse-soft);
+  border-color: var(--comet);
+  color: var(--supernova);
+}
+
+/* Main Content Area - Accounts for sidebar */
+.content {
+  flex: 1;
+  margin-left: 280px;
+  padding: var(--space-8);
+  overflow-y: auto;
+  background: var(--void);
+  min-height: 100vh;
+}
+
+.app-content {
+  flex: 1;
+  padding: var(--space-8);
+  overflow-y: auto;
+  background: var(--void);
+}
+
+/* Page Container */
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: var(--space-8);
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: var(--font-bold);
+  color: var(--supernova);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-2);
+}
+
+.page-subtitle {
+  font-size: var(--text-lg);
+  color: var(--starlight);
+}
+
+/* ============================================
+   STARFIELD BACKGROUND
+   ============================================ */
+
+.starfield {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-below);
+  overflow: hidden;
+}
+
+.starfield::before,
+.starfield::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--supernova);
+  border-radius: var(--radius-full);
+  box-shadow:
+    /* Layer 1 - Small stars */ 100px 50px 0 0
+      rgba(255, 255, 255, 0.3),
+    200px 150px 0 0 rgba(255, 255, 255, 0.2),
+    300px 80px 0 0 rgba(255, 255, 255, 0.4),
+    400px 200px 0 0 rgba(255, 255, 255, 0.2),
+    500px 100px 0 0 rgba(255, 255, 255, 0.3),
+    600px 250px 0 0 rgba(255, 255, 255, 0.2),
+    700px 50px 0 0 rgba(255, 255, 255, 0.4),
+    800px 180px 0 0 rgba(255, 255, 255, 0.3),
+    900px 120px 0 0 rgba(255, 255, 255, 0.2),
+    1000px 220px 0 0 rgba(255, 255, 255, 0.3),
+    150px 300px 0 0 rgba(255, 255, 255, 0.2),
+    250px 400px 0 0 rgba(255, 255, 255, 0.4),
+    350px 350px 0 0 rgba(255, 255, 255, 0.3),
+    450px 450px 0 0 rgba(255, 255, 255, 0.2),
+    550px 380px 0 0 rgba(255, 255, 255, 0.3),
+    650px 500px 0 0 rgba(255, 255, 255, 0.2),
+    750px 420px 0 0 rgba(255, 255, 255, 0.4),
+    850px 480px 0 0 rgba(255, 255, 255, 0.3),
+    950px 350px 0 0 rgba(255, 255, 255, 0.2),
+    1050px 400px 0 0 rgba(255, 255, 255, 0.3);
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+.starfield::after {
+  width: 1px;
+  height: 1px;
+  box-shadow:
+    /* Layer 2 - Tiny stars */ 50px 100px 0 0
+      rgba(255, 255, 255, 0.2),
+    120px 200px 0 0 rgba(255, 255, 255, 0.15),
+    180px 50px 0 0 rgba(255, 255, 255, 0.25),
+    240px 180px 0 0 rgba(255, 255, 255, 0.2),
+    320px 120px 0 0 rgba(255, 255, 255, 0.15),
+    380px 250px 0 0 rgba(255, 255, 255, 0.2),
+    460px 80px 0 0 rgba(255, 255, 255, 0.25),
+    520px 200px 0 0 rgba(255, 255, 255, 0.15),
+    600px 150px 0 0 rgba(255, 255, 255, 0.2),
+    680px 280px 0 0 rgba(255, 255, 255, 0.15),
+    760px 100px 0 0 rgba(255, 255, 255, 0.25),
+    840px 220px 0 0 rgba(255, 255, 255, 0.2),
+    920px 160px 0 0 rgba(255, 255, 255, 0.15),
+    1000px 300px 0 0 rgba(255, 255, 255, 0.2),
+    80px 350px 0 0 rgba(255, 255, 255, 0.15),
+    160px 420px 0 0 rgba(255, 255, 255, 0.25),
+    260px 380px 0 0 rgba(255, 255, 255, 0.2),
+    340px 500px 0 0 rgba(255, 255, 255, 0.15),
+    440px 440px 0 0 rgba(255, 255, 255, 0.2),
+    540px 520px 0 0 rgba(255, 255, 255, 0.25);
+  animation: twinkle 5s ease-in-out infinite reverse;
+}
+
+/* ============================================
+   AUTH PAGES — Portal Design
+   ============================================ */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--void);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-page::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.03) 0%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: var(--space-8);
+  background: var(--nebula);
+  border: 1px solid var(--asteroid);
+  border-radius: var(--radius-3xl);
+  position: relative;
+  z-index: 1;
+  animation: scale-in var(--duration-300) var(--ease-out);
+}
+
+.auth-logo {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--supernova);
+  text-align: center;
+  margin-bottom: var(--space-2);
+  letter-spacing: var(--tracking-tight);
+}
+
+.auth-tagline {
+  font-size: var(--text-sm);
+  color: var(--starlight);
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.auth-footer {
+  margin-top: var(--space-6);
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--starlight);
+}
+
+.auth-footer a {
+  color: var(--supernova);
+  text-decoration: none;
+  font-weight: var(--font-medium);
+  transition: var(--transition-colors);
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================
+   DASHBOARD — Mission Control
+   ============================================ */
+
+.dashboard {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.dashboard-hero {
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+  background: var(--gradient-nebula);
+  border: 1px solid var(--asteroid);
+  border-radius: var(--radius-3xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100%;
+  height: 50%;
+  background: var(--gradient-spotlight);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.current-task-label {
+  font-size: var(--text-sm);
+  color: var(--starlight);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  margin-bottom: var(--space-4);
+}
+
+.current-task-title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--supernova);
+  margin-bottom: var(--space-6);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.task-complete-btn {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--text-lg);
+}
+
+/* Constellation Progress */
+.constellation-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-8);
+}
+
+.constellation-star {
+  width: 12px;
+  height: 12px;
+  background: var(--asteroid);
+  border-radius: var(--radius-full);
+  transition: var(--transition-all);
+}
+
+.constellation-star.completed {
+  background: var(--supernova);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.constellation-star.current {
+  background: var(--supernova);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.stat-card {
+  padding: var(--space-5);
+  background: var(--nebula);
+  border: 1px solid var(--asteroid);
+  border-radius: var(--radius-2xl);
+  text-align: center;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: var(--font-bold);
+  color: var(--supernova);
+  margin-bottom: var(--space-1);
+}
+
+.stat-label {
+  font-size: var(--text-sm);
+  color: var(--starlight);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+  .cosmic-sidebar {
+    width: 100%;
+    min-height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--asteroid);
+    padding: var(--space-4);
+  }
+
+  .app-shell {
+    flex-direction: column;
+  }
+
+  .app-content {
+    padding: var(--space-4);
+  }
+
+  .page-title {
+    font-size: var(--text-3xl);
+  }
+
+  .dashboard-hero {
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .current-task-title {
+    font-size: var(--text-2xl);
+  }
+
+  .auth-card {
+    margin: var(--space-4);
+    padding: var(--space-6);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cosmic-modal {
+    width: 95%;
+    padding: var(--space-4);
+  }
+}

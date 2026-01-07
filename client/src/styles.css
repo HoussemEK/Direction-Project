@@ -1,0 +1,146 @@
+/* ============================================
+   CORE LAYOUT & RESET (Legacy Cleanup)
+   Most styles moved to cosmic-design-system.css
+   ============================================ */
+
+:root {
+  /* Core Variables used by layout */
+  --sidebar-width: 260px;
+  --header-height: 64px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #050505;
+  /* Fallback */
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* App Shell Layout */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--void);
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid var(--asteroid);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  background: linear-gradient(135deg, #fff 0%, #999 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.05em;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-link {
+  color: var(--starlight);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--supernova);
+  transform: translateX(4px);
+}
+
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--supernova);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.content {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  padding: 3rem;
+  min-height: 100vh;
+  position: relative;
+  /* Cosmic Background */
+  background: radial-gradient(circle at top right, #1a1a1a 0%, #000000 60%);
+  z-index: 10;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--asteroid);
+  padding-top: 1.5rem;
+}
+
+.user-info {
+  margin-bottom: 1rem;
+}
+
+.user-name {
+  display: block;
+  color: var(--supernova);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.user-email {
+  display: block;
+  color: var(--starlight);
+  font-size: 0.75rem;
+}
+
+.logout-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: transparent;
+  border: 1px solid var(--asteroid);
+  color: var(--starlight);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-button:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--supernova);
+  border-color: var(--starlight);
+}
+
+/* Loading Screen */
+.loading-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  color: #fff;
+}
