@@ -11,6 +11,7 @@ import AchievementsModule from '../components/AchievementsModule.jsx';
 export default function DashboardPage() {
   useAuth();
   const [tasks, setTasks] = useState([]);
+  const [allTasks, setAllTasks] = useState([]); // Store all tasks for stat/progress calculation
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const [isCompleting, setIsCompleting] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
@@ -31,14 +32,19 @@ export default function DashboardPage() {
     loadData();
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (skipGamification = false) => {
     try {
-      const [tasksData, gamData, actData, tracksData] = await Promise.all([
+      const promises = [
         fetchTasks().catch(() => []),
-        fetchGamificationStats().catch(() => null),
+        skipGamification ? Promise.resolve(null) : fetchGamificationStats().catch(() => null),
         fetchActivityHistory().catch(() => []),
         fetchTracks().catch(() => [])
-      ]);
+      ];
+
+      const [tasksData, gamData, actData, tracksData] = await Promise.all(promises);
+
+      // Store all tasks for calculations
+      setAllTasks(tasksData);
 
       // Process Tasks
       const incompleteTasks = tasksData.filter(t => !t.completed);
@@ -48,8 +54,10 @@ export default function DashboardPage() {
       );
       setTasks(sorted);
 
-      // Process Gamification
-      setGamification(gamData);
+      // Process Gamification - only if we didn't skip it
+      if (!skipGamification && gamData) {
+        setGamification(gamData);
+      }
       setActivity(actData);
 
       // Store all tracks that are not completed
@@ -70,6 +78,7 @@ export default function DashboardPage() {
     if (e.key === 'Enter' && smartInput.trim()) {
       // Require a track to be selected
       if (!activeTrack) {
+        console.warn('No active track selected, cannot create task');
         return;
       }
 
@@ -89,12 +98,18 @@ export default function DashboardPage() {
           trackLevel: selectedTrack.currentLevel,
         };
 
+        console.log('Creating task with data:', taskData);
         const newTask = await createTask(taskData);
+        console.log('Task created successfully:', newTask);
+        console.log('Current selectedTrackId:', selectedTrackId);
+        console.log('New task trackId:', newTask.trackId);
 
         setTasks(prev => {
           const newTasks = [...prev, newTask];
           const priorityOrder = { high: 0, medium: 1, low: 2 };
-          return newTasks.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+          const sorted = newTasks.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+          console.log('Tasks state updated, total tasks:', sorted.length);
+          return sorted;
         });
         setSmartInput('');
       } catch (err) {
@@ -130,21 +145,32 @@ export default function DashboardPage() {
     setIsExiting(true); // Trigger fade/slide out
 
     try {
+      console.log('Completing task:', currentTask._id);
       const res = await updateTask(currentTask._id, { completed: true });
+      console.log('Task completion response:', res);
+      console.log('Gamification data received:', res.gamification);
+
       sessionCompleted.current += 1;
 
       // Update local gamification state if returned
       if (res.gamification) {
-        setGamification(prev => ({
-          ...prev,
-          xp: res.gamification.totalXP,
-          level: res.gamification.newLevel || prev.level,
-          currentLevelXP: res.gamification.currentLevelXP,
-          xpForNextLevel: res.gamification.xpForNextLevel,
-          badges: res.gamification.newBadges.length > 0
-            ? [...prev.badges, ...res.gamification.newBadges]
-            : prev.badges
-        }));
+        console.log('Updating gamification state with XP award');
+        setGamification(prev => {
+          const updated = {
+            ...prev,
+            xp: res.gamification.totalXP,
+            level: res.gamification.newLevel || prev?.level,
+            currentLevelXP: res.gamification.currentLevelXP,
+            xpForNextLevel: res.gamification.xpForNextLevel,
+            badges: res.gamification.newBadges?.length > 0
+              ? [...(prev?.badges || []), ...res.gamification.newBadges]
+              : prev?.badges || []
+          };
+          console.log('New gamification state:', updated);
+          return updated;
+        });
+      } else {
+        console.warn('No gamification data in response');
       }
 
       setTimeout(async () => {
@@ -152,10 +178,11 @@ export default function DashboardPage() {
         setTasks(prev => prev.filter(t => t._id !== currentTask._id));
         setCurrentTaskIndex(0);
         setIsCompleting(false);
-        // Reload data to update progress bar (and tracks)
-        await loadData();
+        // Reload data to update progress bar (and tracks), but skip gamification since we just got fresh data
+        await loadData(true);
       }, 300); // Wait for animation
-    } catch {
+    } catch (err) {
+      console.error('Task completion failed:', err);
       setIsCompleting(false);
       setIsExiting(false);
     }
@@ -169,8 +196,8 @@ export default function DashboardPage() {
 
   // Calculate level progress
   const levelProgress = activeTrack ? {
-    tasksCompleted: tasks.filter(t => String(t.trackId) === String(activeTrack._id) && t.trackLevel === activeTrack.currentLevel && t.completed).length,
-    tasksTotal: tasks.filter(t => String(t.trackId) === String(activeTrack._id) && t.trackLevel === activeTrack.currentLevel).length,
+    tasksCompleted: allTasks.filter(t => String(t.trackId) === String(activeTrack._id) && t.trackLevel === activeTrack.currentLevel && t.completed).length,
+    tasksTotal: allTasks.filter(t => String(t.trackId) === String(activeTrack._id) && t.trackLevel === activeTrack.currentLevel).length,
     levelNumber: activeTrack.currentLevel,
     trackName: activeTrack.name
   } : null;

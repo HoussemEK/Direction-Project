@@ -28,6 +28,9 @@ app.use(
 );
 app.use(express.json());
 
+// TEST LOG: If you see this, server changes are being picked up
+console.log('>>> SERVER LOADED WITH LATEST CHANGES <<<');
+
 // Health
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", service: "direction-server" });

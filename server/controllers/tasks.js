@@ -60,10 +60,25 @@ export const createTask = async (req, res) => {
       );
     }
 
-    const populated = await Task.findById(created._id).populate(
-      "categories",
-      "name color icon"
-    );
+    // Get the document to return
+    let taskToReturn;
+    if (categories && categories.length > 0) {
+      taskToReturn = await Task.findById(created._id)
+        .populate("categories", "name color icon");
+    } else {
+      taskToReturn = created;
+    }
+    
+    if (categories && categories.length > 0) {
+      await Category.updateMany(
+        { _id: { $in: categories }, userId: req.userId },
+        { $addToSet: { tasks: created._id } }
+      );
+    }
+
+    const populated = await Task.findById(created._id)
+      .populate("categories", "name color icon");
+    
     res.status(201).json(populated);
   } catch (err) {
     console.error("Create task error:", err);

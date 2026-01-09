@@ -82,6 +82,14 @@ export const validateCreateTask = [
     .optional()
     .isMongoId()
     .withMessage("Invalid category ID"),
+  body("trackId")
+    .optional()
+    .isMongoId()
+    .withMessage("Invalid track ID"),
+  body("trackLevel")
+    .optional()
+    .isInt({ min: 1 })
+    .withMessage("Track level must be a positive integer"),
   handleValidationErrors,
 ];
 

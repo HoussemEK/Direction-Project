@@ -49,7 +49,12 @@ const taskSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { timestamps: true }
+  { 
+    timestamps: true,
+    minimize: false, // Ensure null/undefined fields are included in toObject/toJSON
+    toJSON: { virtuals: false },
+    toObject: { virtuals: false }
+  }
 );
 
 taskSchema.index({ userId: 1, completed: 1 });

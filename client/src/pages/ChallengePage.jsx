@@ -65,13 +65,30 @@ export default function ChallengePage() {
   }, []);
 
   useEffect(() => {
+    console.log('Timer useEffect triggered:', {
+      hasChallenge: !!activeChallenge,
+      startedAt: activeChallenge?.startedAt,
+      durationMinutes: activeChallenge?.durationMinutes,
+      remainingTime
+    });
+
     if (activeChallenge?.startedAt && activeChallenge?.durationMinutes) {
+      // Only calculate remaining time if not already set
+      if (remainingTime === null) {
+        console.log('Calculating remaining time from startedAt');
+        calculateRemainingTime(activeChallenge);
+      }
+      console.log('Starting timer interval');
       startTimer();
     }
+
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current) {
+        console.log('Clearing timer interval');
+        clearInterval(timerRef.current);
+      }
     };
-  }, [activeChallenge]);
+  }, [activeChallenge, remainingTime]);
 
   const calculateRemainingTime = (challenge) => {
     const started = new Date(challenge.startedAt);
@@ -83,13 +100,20 @@ export default function ChallengePage() {
 
   const startTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
+    console.log('Timer interval started');
+
     timerRef.current = setInterval(() => {
       setRemainingTime(prev => {
         if (prev === null || prev <= 0) {
+          console.log('Timer reached zero, clearing interval');
           clearInterval(timerRef.current);
           return 0;
         }
-        return prev - 1;
+        const newTime = prev - 1;
+        if (newTime % 10 === 0) {
+          console.log('Timer countdown:', newTime, 'seconds remaining');
+        }
+        return newTime;
       });
     }, 1000);
   };
@@ -98,13 +122,22 @@ export default function ChallengePage() {
     if (!activeChallenge || actionLoading) return;
     setActionLoading(true);
     try {
+      console.log('Accepting challenge:', activeChallenge._id);
       const updated = await acceptChallenge(activeChallenge._id);
+      console.log('Challenge accepted, response:', updated);
+
       setActiveChallenge(updated);
-      if (updated.isTimed) {
-        calculateRemainingTime(updated);
+
+      if (updated.isTimed && updated.durationMinutes) {
+        console.log('Initializing timer for timed challenge');
+        // Set remaining time immediately to full duration
+        const totalSeconds = updated.durationMinutes * 60;
+        setRemainingTime(totalSeconds);
+        console.log('Timer initialized with', totalSeconds, 'seconds');
+        // Timer will start via useEffect when remainingTime updates
       }
-    } catch {
-      // Silent fail
+    } catch (err) {
+      console.error('Error accepting challenge:', err);
     } finally {
       setActionLoading(false);
     }
@@ -209,7 +242,7 @@ export default function ChallengePage() {
           <p className="mission-description">
             All missions complete. Ready for a new challenge?
           </p>
-          
+
           {!showCreateForm ? (
             <button className="btn-ghost-primary" onClick={() => setShowCreateForm(true)} style={{ marginTop: '2rem' }}>
               Create New Challenge
@@ -330,7 +363,7 @@ export default function ChallengePage() {
 
       <section className="missions-page">
         <div className="mission-briefing">
-          
+
           {/* Circular Timer wrapping the title */}
           {showTimer ? (
             <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 'var(--space-8)' }}>
@@ -363,7 +396,7 @@ export default function ChallengePage() {
                   cy="10"
                   r="6"
                   fill={remainingTime !== null && remainingTime < 60 ? '#f87171' : 'var(--supernova)'}
-                  style={{ 
+                  style={{
                     transform: `rotate(${(getCircularProgress() / 100) * 360}deg)`,
                     transformOrigin: '140px 140px',
                     filter: 'drop-shadow(0 0 8px currentColor)',
@@ -371,13 +404,13 @@ export default function ChallengePage() {
                   }}
                 />
               </svg>
-              
+
               {/* Title inside the circle */}
               <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '60px 40px' }}>
                 <h1 className="mission-title" style={{ marginBottom: 'var(--space-4)' }}>{activeChallenge.title}</h1>
-                <div style={{ 
-                  fontSize: 'var(--text-4xl)', 
-                  fontWeight: 'bold', 
+                <div style={{
+                  fontSize: 'var(--text-4xl)',
+                  fontWeight: 'bold',
                   color: remainingTime !== null && remainingTime < 60 ? '#f87171' : 'var(--supernova)',
                   fontFamily: 'monospace',
                   textShadow: remainingTime !== null && remainingTime < 60 ? '0 0 20px #f87171' : '0 0 20px var(--supernova)'
@@ -389,14 +422,14 @@ export default function ChallengePage() {
           ) : (
             <h1 className="mission-title">{activeChallenge.title}</h1>
           )}
-          
+
           <p className="mission-description">{activeChallenge.description}</p>
 
           {/* Category Badge */}
           {activeChallenge.category && (
-            <div style={{ 
-              display: 'inline-flex', 
-              alignItems: 'center', 
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
               gap: '0.5rem',
               padding: '0.5rem 1rem',
               background: getCategoryStyle(activeChallenge.category).bg,
@@ -406,8 +439,8 @@ export default function ChallengePage() {
               marginBottom: 'var(--space-4)'
             }}>
               <span style={{ fontSize: '1.2rem' }}>{getCategoryStyle(activeChallenge.category).icon}</span>
-              <span style={{ 
-                fontSize: 'var(--text-sm)', 
+              <span style={{
+                fontSize: 'var(--text-sm)',
                 color: getCategoryStyle(activeChallenge.category).color,
                 fontWeight: '500',
                 textTransform: 'capitalize'
